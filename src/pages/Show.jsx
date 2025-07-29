@@ -1,7 +1,7 @@
 import React from "react";
 import { arr } from "../InitData/Data";
 import { Link, useParams } from "react-router-dom";
-import rooms1 from "../assets/hotelimage1.jpg";
+import rooms1 from "../assets/hotelImage1.jpg";
 import rooms2 from "../assets/hotelImage2.jpg";
 import rooms3 from "../assets/hotelImage3.jpg";
 import rooms4 from "../assets/hotelImage4.jpg";
