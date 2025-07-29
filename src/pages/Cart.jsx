@@ -11,7 +11,7 @@ function Cart() {
   if (selectedItem && !cartData.some((el) => el.id === selectedItem.id)) {
     cartData.push(selectedItem);
   }
-  console.log(cartData);
+  console.log(cartData)
 
   // Check if cartData is empty
   if (cartData.length === 0) {
