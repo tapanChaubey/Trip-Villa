@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import CartLogo from "../assets/cartlogo.png";
 
 const Navbar = () => {
   const location = useLocation();
@@ -66,11 +65,7 @@ const Navbar = () => {
           <line x1="21" y1="21" x2="16.65" y2="16.65" />
         </svg>
        <Link to="/cart">
-  <img
-    src={CartLogo}
-    alt="Cart"
-    className="w-6 h-6 md:w-8 md:h-8 object-contain transition-transform hover:scale-105"
-  />
+    Cart
 </Link>
 
         <button className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-6 py-2 rounded-full shadow-md hover:opacity-90 transition">
