@@ -5,7 +5,7 @@ const Hero = () => {
   return (
     <div
       className="hero-container flex items-center justify-center min-h-[80vh] md:h-screen bg-cover bg-center relative"
-      style={{ backgroundImage: `url("/src/assets/heroImage.png")` }}
+      style={{ backgroundImage: `url("src/heroImage.png")` }}
     >
       {/* Overlay */}
       <div className="absolute inset-0 bg-black/30 z-0" />
