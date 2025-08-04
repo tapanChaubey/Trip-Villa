@@ -1,4 +1,4 @@
-export let cartData=[
+export let OrderData=[
     { id: 7,
     title: "Rustic Cabin by the Lake",
     description:
@@ -24,4 +24,3 @@ export let cartData=[
     country: "United States",
   }
 ]
-console.log(3+'3');

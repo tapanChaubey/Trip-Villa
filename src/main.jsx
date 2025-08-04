@@ -8,6 +8,7 @@ import { BrowserRouter } from 'react-router-dom';
 import Product from './pages/Product.jsx';
 import Show from './pages/Show.jsx';
 import Cart from './pages/Cart.jsx';
+import Order from './pages/Order.jsx';
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
@@ -16,6 +17,7 @@ const router = createBrowserRouter(
       <Route path="show/:id" element={<Show />} />
       <Route path="cart" element={<Cart/>}/>
       <Route path="cart/:id" element={<Cart/>}/>
+      <Route path='Order/:id' element={<Order/>}/>
 
     </Route>
   )

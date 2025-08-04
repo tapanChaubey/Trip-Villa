@@ -107,7 +107,7 @@ const Show = () => {
           {/* Buttons Section */}
           <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mt-6">
             <Link
-              to={`/cart/${item.id}`}
+              to={`/Order/${item.id}`}
               className="px-6 py-3 text-lg font-bold rounded-full text-white 
                          bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-semibold 
                          active:scale-95 transition-transform duration-300 shadow-lg"

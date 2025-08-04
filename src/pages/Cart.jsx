@@ -2,7 +2,7 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import { arr } from "../InitData/Data";
 import { cartData } from "../InitData/Card";
-
+import { Link } from "react-router-dom";
 function Cart() {
   const { id } = useParams();
 
@@ -78,9 +78,9 @@ function Cart() {
 
                   {/* Buttons */}
                   <div className="flex space-x-6 mt-5">
-                    <button className="px-8 py-2 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-semibold rounded transition">
+                    <Link to={`/Order/${itemData.id}`} className="px-8 py-2 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-semibold rounded transition">
                       Book Room
-                    </button>
+                    </Link>
                     <button className="px-8 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 font-semibold transition">
                       Delete Room
                     </button>
