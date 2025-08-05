@@ -9,6 +9,8 @@ import Product from './pages/Product.jsx';
 import Show from './pages/Show.jsx';
 import Cart from './pages/Cart.jsx';
 import Order from './pages/Order.jsx';
+import Admin from './pages/Admin.jsx';
+import Login from './Auth/Login.jsx';
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
@@ -18,7 +20,8 @@ const router = createBrowserRouter(
       <Route path="cart" element={<Cart/>}/>
       <Route path="cart/:id" element={<Cart/>}/>
       <Route path='Order/:id' element={<Order/>}/>
-
+      <Route path='Admin/:id' element={<Admin/>}/>
+      <Route path='Login' element={<Login/>}/>
     </Route>
   )
 );

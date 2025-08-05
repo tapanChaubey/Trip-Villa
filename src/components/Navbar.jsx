@@ -66,11 +66,11 @@ const Navbar = () => {
         </svg>
        <Link to="/cart">
     Cart
-</Link>
+</Link >
 
-        <button className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-6 py-2 rounded-full shadow-md hover:opacity-90 transition">
+        <Link to={`/Login`} className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-6 py-2 rounded-full shadow-md hover:opacity-90 transition">
           Login
-        </button>
+        </Link>
       </div>
 
       {/* Mobile Menu Toggle */}

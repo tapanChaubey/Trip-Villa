@@ -82,12 +82,12 @@ export default function Order() {
 
           {/* Action Buttons */}
           <div className="flex flex-wrap gap-4 mt-6">
-            <button
+            <Link to={`/Admin/${itemData.id}`}
               onClick={confo}
               className="bg-indigo-600 text-white px-6 py-2 rounded hover:bg-indigo-700 transition"
             >
               Confirm Booking
-            </button>
+            </Link>
             <button
               onClick={DeleteRooms}
               className="bg-gray-300 text-gray-800 px-6 py-2 rounded hover:bg-gray-400 transition"

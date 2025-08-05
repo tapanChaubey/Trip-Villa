@@ -1,11 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import {heroImage} from "../heroImage.png"
 
 const Hero = () => {
   return (
     <div
       className="hero-container flex items-center justify-center min-h-[80vh] md:h-screen bg-cover bg-center relative"
-      style={{ backgroundImage: `url("src/heroImage.png")` }}
+      style={{ backgroundImage: `url(${heroImage})` }}
     >
       {/* Overlay */}
       <div className="absolute inset-0 bg-black/30 z-0" />
