@@ -1,20 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { arr } from "../InitData/Data";
 import { cartData } from "../InitData/Card";
 import { Link } from "react-router-dom";
+
 function Cart() {
   const { id } = useParams();
+  const [cartItems, setCartItems] = useState(() => {
+    const selectedItem = arr.find((item) => item.id === parseInt(id));
+    if (selectedItem && !cartData.some((el) => el.id === selectedItem.id)) {
+      cartData.push(selectedItem);
+    }
+    return [...cartData];
+  });
 
-  // Find and add item only once if not already added
-  const selectedItem = arr.find((item) => item.id === parseInt(id));
-  if (selectedItem && !cartData.some((el) => el.id === selectedItem.id)) {
-    cartData.push(selectedItem);
-  }
-  console.log(cartData)
+  const handleDelete = (itemId) => {
+    const updatedCart = cartItems.filter((item) => item.id !== itemId);
+    setCartItems(updatedCart);
 
-  // Check if cartData is empty
-  if (cartData.length === 0) {
+    // Also update the original cartData array
+    const index = cartData.findIndex((item) => item.id === itemId);
+    if (index !== -1) {
+      cartData.splice(index, 1);
+    }
+  };
+
+  if (cartItems.length === 0) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <h1 className="text-2xl font-bold text-gray-700">🛒 Cart is Empty!</h1>
@@ -28,13 +39,13 @@ function Cart() {
         <h1 className="text-3xl font-bold text-gray-800 mb-6">🛒 Your Cart</h1>
 
         <div className="space-y-4">
-          {cartData.map((itemData, idx) => (
-            <div key={idx}>
+          {cartItems.map((itemData, idx) => (
+            <div key={itemData.id}>
               <div className="flex flex-col md:flex-row bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition hover:scale-[1.01]">
                 {/* Image */}
                 <div className="md:w-1/2 w-full">
                   <img
-                    src={itemData?.image?.url || "https://via.placeholder.com/300"}
+                    src={itemData?.image?.url}
                     alt={itemData?.title || "Product image"}
                     className="h-full w-full object-cover"
                   />
@@ -78,10 +89,16 @@ function Cart() {
 
                   {/* Buttons */}
                   <div className="flex space-x-6 mt-5">
-                    <Link to={`/Order/${itemData.id}`} className="px-8 py-2 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-semibold rounded transition">
+                    <Link
+                      to={`/Order/${itemData.id}`}
+                      className="px-8 py-2 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-semibold rounded transition"
+                    >
                       Book Room
                     </Link>
-                    <button className="px-8 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 font-semibold transition">
+                    <button
+                      onClick={() => handleDelete(itemData.id)}
+                      className="px-8 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 font-semibold transition"
+                    >
                       Delete Room
                     </button>
                   </div>

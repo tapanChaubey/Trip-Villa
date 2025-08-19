@@ -1,3 +1,4 @@
+// src/pages/Show.jsx
 import React from "react";
 import { arr } from "../InitData/Data";
 import { Link, useParams } from "react-router-dom";
@@ -6,13 +7,32 @@ import rooms2 from "../assets/hotelImage2.jpg";
 import rooms3 from "../assets/hotelImage3.jpg";
 import rooms4 from "../assets/hotelImage4.jpg";
 import CheckRooms from "../components/CheckRooms";
-
+import MapBox from "../components/MapBox";
+import { useContext } from "react";
+import { AuthContext } from "../context";
+import { useState,useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 const imageArr = [rooms1, rooms2, rooms3, rooms4];
 
 const Show = () => {
   const { id } = useParams();
   const item = arr.find((item) => item.id === parseInt(id));
-
+  const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const handleCart = () => {
+    if (user) {
+       navigate(`/cart/${item.id}`);
+    } else {
+      navigate("/login");
+    }
+  };
+const handleOrder = () => {
+    if (user) {
+      navigate(`/order/${item.id}`);
+    } else {
+      navigate("/login");
+    }
+  };
   if (!item) {
     return (
       <div className="text-center text-red-500 font-bold text-xl mt-10">
@@ -24,15 +44,11 @@ const Show = () => {
   return (
     <div className="bg-gray-100 min-h-screen py-10 px-4">
       <div className="max-w-[1340px] mx-auto bg-white rounded-xl shadow-md overflow-hidden flex flex-col px-6 sm:px-10">
-
-        {/* Title */}
         <h2 className="text-center text-xl sm:text-4xl font-extrabold text-gray-900 mt-6 mb-8 tracking-tight">
           {item.title}
         </h2>
 
-        {/* Image Section */}
         <div className="flex flex-col-reverse md:flex-row gap-6 pb-6 md:h-[520px]">
-          {/* Left: Main Image */}
           <div className="w-full md:w-1/2">
             <img
               src={item.image.url}
@@ -41,9 +57,8 @@ const Show = () => {
             />
           </div>
 
-          {/* Right: Grid of Additional Images */}
           <div className="w-full md:w-1/2 grid grid-cols-2 grid-rows-2 gap-4">
-            {imageArr.slice(0, 4).map((img, idx) => (
+            {imageArr.map((img, idx) => (
               <img
                 key={idx}
                 src={img}
@@ -54,7 +69,6 @@ const Show = () => {
           </div>
         </div>
 
-        {/* Star Rating Section */}
         <div className="mb-6 mt-4">
           <label htmlFor="rating" className="block text-lg font-semibold mb-2">
             Rating:
@@ -81,7 +95,6 @@ const Show = () => {
           </fieldset>
         </div>
 
-        {/* Details Section */}
         <div className="pb-10">
           <p className="text-lg text-xl font-extrabold text-gray-600 mb-2 italic">
             {item.location}
@@ -104,29 +117,31 @@ const Show = () => {
 
           <CheckRooms />
 
-          {/* Buttons Section */}
           <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mt-6">
-            <Link
-              to={`/Order/${item.id}`}
+            <button
+              onClick={handleOrder}
               className="px-6 py-3 text-lg font-bold rounded-full text-white 
-                         bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-semibold 
+                         bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 
                          active:scale-95 transition-transform duration-300 shadow-lg"
             >
               Book Now
-            </Link>
+            </button>
 
-            <Link
-              to={`/cart/${item.id}`}
+            <button
+              onClick={handleCart}
               className="px-6 py-3 text-lg font-bold rounded-full text-white 
                          bg-orange-500 hover:bg-orange-600 
                          focus:outline-none focus:ring-4 focus:ring-orange-300 
                          active:scale-95 transition-transform duration-300 shadow-lg"
             >
               Add To Cart
-            </Link>
+            </button>
           </div>
         </div>
       </div>
+
+      {/* Pass coordinates and title to MapBox */}
+      <MapBox coordinates={item.coordinates} title={item.title} />
     </div>
   );
 };

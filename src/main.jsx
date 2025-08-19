@@ -11,6 +11,8 @@ import Cart from './pages/Cart.jsx';
 import Order from './pages/Order.jsx';
 import Admin from './pages/Admin.jsx';
 import Login from './Auth/Login.jsx';
+import Signup from './Auth/Signup.jsx';
+import { Logout } from './Auth/Logout.jsx';
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
@@ -22,6 +24,8 @@ const router = createBrowserRouter(
       <Route path='Order/:id' element={<Order/>}/>
       <Route path='Admin/:id' element={<Admin/>}/>
       <Route path='Login' element={<Login/>}/>
+      <Route path='Signup' element={<Signup/>}/>
+      <Route path='Logout' element={<Logout/>}/>
     </Route>
   )
 );

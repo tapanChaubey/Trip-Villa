@@ -1,13 +1,26 @@
 import React from 'react';
-import { useState } from 'react';
-import { createContext, useEffect } from "react";
-const AppContext = React.createContext();
-export const AppContextProvider = ({ children }) => {
-  const [isDisplayed, setIsDisplayed] = useState(false);
+import { createContext, useEffect,useState } from "react";
+export const AuthContext = React.createContext();
+export const AuthProvider = ({ children }) => {
+  const [user, setUser] = useState("");
+
+  const login = (email, password) => {
+    const userData = { email, password };
+    setUser(userData);
+  };
+
+  const signup = (email, password) => {
+    const userData = { email, password };
+    setUser(userData);
+  };
+
+  const logout = () => {
+    setUser(null);
+  };
 
   return (
-    <AppContext.Provider value={{ isDisplayed, setIsDisplayed }}>
+    <AuthContext.Provider value={{ user, login, signup, logout }}>
       {children}
-    </AppContext.Provider>
+    </AuthContext.Provider>
   );
 };

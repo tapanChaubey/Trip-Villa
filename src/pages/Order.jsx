@@ -2,11 +2,15 @@ import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { arr } from "../InitData/Data";
 import { OrderData } from "../InitData/Order";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../context";
 export default function Order() {
   const { id } = useParams();
+  const { user } = React.useContext(AuthContext);
   const [itemData, setItemData] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [totalAmount, setTotalAmount] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const item = arr.find((item) => item.id === parseInt(id));
@@ -34,6 +38,8 @@ export default function Order() {
 
   function DeleteRooms() {
     alert("❌ Booking cancelled.");
+    navigate("/")
+
   }
 
   if (!itemData) {
