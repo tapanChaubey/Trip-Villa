@@ -1,13 +1,18 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, use } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { AuthContext } from "../context";
-
+import { AuthContext } from '../context';
+import { useAuth0 } from "@auth0/auth0-react";
 const Navbar = () => {
   const location = useLocation();
   const isHome = location.pathname === '/';
   const navigate = useNavigate();
-  const { logout, user } = useContext(AuthContext);
+  const { cartCount } = useContext(AuthContext);
+  useEffect(() => {
+    //console.log(cartCount)
+  }, [cartCount]);
 
+  const { user, loginWithRedirect, logout } = useAuth0();
+  
   const handleLogout = () => {
     logout();
     navigate('/');
@@ -17,7 +22,7 @@ const Navbar = () => {
     { name: 'Home', path: '/' },
     { name: 'Hotel', path: '/rooms' },
     { name: 'Experience', path: '/' },
-    { name: 'About', path: '/' },
+    { name: 'About', path: '/About' },
   ];
 
   const [isScrolled, setIsScrolled] = useState(false);
@@ -80,41 +85,44 @@ const Navbar = () => {
           <line x1="21" y1="21" x2="16.65" y2="16.65" />
         </svg>
 
-         <Link to="/cart" className="p-2 rounded-full hover:bg-indigo-100 transition">
-          <svg
-            className="h-6 w-6 text-blue-700 hover:text-indigo-600 transition"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            viewBox="0 0 24 24"
-          >
-            <path d="M3 3h2l.4 2M7 13h10l4-8H5.4" />
-            <circle cx="7" cy="21" r="1" />
-            <circle cx="17" cy="21" r="1" />
-          </svg>
-        </Link>
-
         {user ? (
+          <>
+         <Link to="/cart" className="relative flex items-center gap-2 p-2 rounded-full hover:bg-indigo-100 transition">
+  <svg
+    className="h-6 w-6 text-blue-700 hover:text-indigo-600 transition"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    viewBox="0 0 24 24"
+  >
+    <path d="M3 3h2l.4 2M7 13h10l4-8H5.4" />
+    <circle cx="7" cy="21" r="1" />
+    <circle cx="17" cy="21" r="1" />
+  </svg>
+
+  {cartCount > 0 && (
+    <span className="bg-red-500 text-white text-xs font-semibold px-2 py-0.5 rounded-full">
+      {cartCount}
+    </span>
+  )}
+</Link>
+
           <button
-            onClick={handleLogout}
+           onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}
             className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-6 py-2 rounded-full shadow-md hover:opacity-90 transition"
           >
             Logout
           </button>
+          </>
         ) : (
           <>
-            <Link
-              to="/Login"
+            <button
+              onClick={() => loginWithRedirect()}
               className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-6 py-2 rounded-full shadow-md hover:opacity-90 transition"
             >
-              Login
-            </Link>
-            <Link
-              to="/Signup"
-              className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-6 py-2 rounded-full shadow-md hover:opacity-90 transition"
-            >
-              Signup
-            </Link>
+             Register
+            </button>
+           
           </>
         )}
       </div>

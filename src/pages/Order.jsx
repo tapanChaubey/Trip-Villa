@@ -3,10 +3,10 @@ import { useParams, Link } from "react-router-dom";
 import { arr } from "../InitData/Data";
 import { OrderData } from "../InitData/Order";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../context";
+import { useAuth0 } from "@auth0/auth0-react";
 export default function Order() {
   const { id } = useParams();
-  const { user } = React.useContext(AuthContext);
+  const {user} = useAuth0();
   const [itemData, setItemData] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [totalAmount, setTotalAmount] = useState(0);

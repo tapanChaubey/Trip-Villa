@@ -9,7 +9,7 @@ import rooms4 from "../assets/hotelImage4.jpg";
 import CheckRooms from "../components/CheckRooms";
 import MapBox from "../components/MapBox";
 import { useContext } from "react";
-import { AuthContext } from "../context";
+import { useAuth0 } from "@auth0/auth0-react";
 import { useState,useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 const imageArr = [rooms1, rooms2, rooms3, rooms4];
@@ -17,20 +17,20 @@ const imageArr = [rooms1, rooms2, rooms3, rooms4];
 const Show = () => {
   const { id } = useParams();
   const item = arr.find((item) => item.id === parseInt(id));
-  const { user } = useContext(AuthContext);
+  const { user, loginWithRedirect } = useAuth0();
   const navigate = useNavigate();
   const handleCart = () => {
     if (user) {
        navigate(`/cart/${item.id}`);
     } else {
-      navigate("/login");
+      loginWithRedirect();
     }
   };
 const handleOrder = () => {
     if (user) {
       navigate(`/order/${item.id}`);
     } else {
-      navigate("/login");
+      loginWithRedirect();
     }
   };
   if (!item) {

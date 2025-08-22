@@ -1,7 +1,32 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import {arr} from "../InitData/Data"
+import { useState,useEffect } from "react";
+import { useContext } from "react";
+import { AuthContext } from "../context";
 const Hero = () => {
+  const [destination, setDestination] = useState("");
+  const [checkIn, setCheckIn] = useState("");
+  const [checkOut, setCheckOut] = useState("");
+  const [guests, setGuests] = useState(1);
+  const { wishlist, addToWishlist } = useContext(AuthContext);
+
+  function handleSearch(e) {
+    e.preventDefault();
+
+    const filteredRooms = arr.filter((room) => {
+      const isDestinationMatch = room.destination.toLowerCase().includes(destination.toLowerCase());
+      const isCheckInMatch = room.checkIn === checkIn;
+      const isCheckOutMatch = room.checkOut === checkOut;
+      const isGuestsMatch = room.guests >= guests;
+
+      return isDestinationMatch && isCheckInMatch && isCheckOutMatch && isGuestsMatch;
+    });
+
+    addToWishlist(filteredRooms);
+    console.log(wishlist);
+  }
+
   return (
     <div
       className="hero-container flex items-center justify-center min-h-[80vh] md:h-screen bg-cover bg-center relative"
@@ -20,7 +45,7 @@ const Hero = () => {
         </p>
 
         {/* Booking Form */}
-        <form className="bg-white/90 backdrop-blur-md text-gray-700 rounded-xl px-4 sm:px-6 py-5 flex flex-row flex-wrap justify-center items-end gap-4 sm:gap-6 mb-6 sm:mb-8 shadow-xl w-full max-w-4xl mx-auto">
+        <form onSubmit={handleSearch} className="bg-white/90 backdrop-blur-md text-gray-700 rounded-xl px-4 sm:px-6 py-5 flex flex-row flex-wrap justify-center items-end gap-4 sm:gap-6 mb-6 sm:mb-8 shadow-xl w-full max-w-4xl mx-auto">
           {/* Destination */}
           <div className="flex flex-col w-[48%] sm:w-auto min-w-[140px]">
             <label htmlFor="destinationInput" className="text-xs sm:text-sm font-semibold mb-1">
@@ -32,6 +57,8 @@ const Hero = () => {
               type="text"
               className="rounded-md border border-gray-300 px-3 py-1.5 sm:px-4 sm:py-2 text-sm outline-none w-full"
               placeholder="Where to?"
+              value={destination}
+              onChange={(e) => setDestination(e.target.value)}
               required
             />
           </div>
@@ -45,6 +72,9 @@ const Hero = () => {
               id="checkIn"
               type="date"
               className="rounded-md border border-gray-300 px-3 py-1.5 sm:px-4 sm:py-2 text-sm outline-none w-full"
+              value={checkIn}
+              onChange={(e) => setCheckIn(e.target.value)}
+              required
             />
           </div>
 
@@ -57,6 +87,9 @@ const Hero = () => {
               id="checkOut"
               type="date"
               className="rounded-md border border-gray-300 px-3 py-1.5 sm:px-4 sm:py-2 text-sm outline-none w-full"
+              value={checkOut}
+              onChange={(e) => setCheckOut(e.target.value)}
+              required
             />
           </div>
 
@@ -72,6 +105,9 @@ const Hero = () => {
               type="number"
               placeholder="0"
               className="rounded-md border border-gray-300 px-3 py-1.5 sm:px-4 sm:py-2 text-sm outline-none w-full"
+              value={guests}
+              onChange={(e) => setGuests(e.target.value)}
+              required
             />
           </div>
 
@@ -79,6 +115,7 @@ const Hero = () => {
           <button
             type="submit"
             className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-semibold text-sm sm:text-base px-4 sm:px-6 py-2 rounded-md shadow-md w-full sm:w-auto transition duration-300 transform hover:scale-105"
+          
           >
             Search
           </button>

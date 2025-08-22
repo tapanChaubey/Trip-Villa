@@ -1,15 +1,21 @@
-import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useState, useContext, useEffect } from "react";
+import { useParams, Link } from "react-router-dom";
 import { arr } from "../InitData/Data";
 import { cartData } from "../InitData/Card";
-import { Link } from "react-router-dom";
+import { AuthContext } from "../context";
+
+let cartCount1 = cartData.length;
 
 function Cart() {
   const { id } = useParams();
+  const { cartItems1 } = useContext(AuthContext);
+
   const [cartItems, setCartItems] = useState(() => {
     const selectedItem = arr.find((item) => item.id === parseInt(id));
     if (selectedItem && !cartData.some((el) => el.id === selectedItem.id)) {
       cartData.push(selectedItem);
+      cartCount1++;
+      cartItems1(cartCount1);
     }
     return [...cartData];
   });
@@ -18,10 +24,11 @@ function Cart() {
     const updatedCart = cartItems.filter((item) => item.id !== itemId);
     setCartItems(updatedCart);
 
-    // Also update the original cartData array
     const index = cartData.findIndex((item) => item.id === itemId);
     if (index !== -1) {
       cartData.splice(index, 1);
+      cartCount1--;
+      cartItems1(cartCount1);
     }
   };
 
@@ -39,7 +46,7 @@ function Cart() {
         <h1 className="text-3xl font-bold text-gray-800 mb-6">🛒 Your Cart</h1>
 
         <div className="space-y-4">
-          {cartItems.map((itemData, idx) => (
+          {cartItems.map((itemData) => (
             <div key={itemData.id}>
               <div className="flex flex-col md:flex-row bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition hover:scale-[1.01]">
                 {/* Image */}
